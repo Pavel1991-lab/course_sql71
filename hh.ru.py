@@ -12,17 +12,17 @@ class HH():
         params = {
             "page": 0,
             "per_page": 100,
-            # "employer_id":
+            "id": 1382065
         }
         response = []
         for page in range(pages):
             params.update({"page": page})
             data = requests.get(f"https://api.hh.ru/vacancies", params=params)
             try:
-                items = data.json()['items']
-                for item in items:
-                    if item['employer']['name'] in ['Яндекс', 'Camilla Coffee', 'АРТИТЕРА', 'Детективное Агентство Главк', 'Альбатрос', 'КлеверИнвест', 'Sip Direction', 'Барса', 'Фемави', 'Смарт Конекшн']:
-                        response.append(item)
+                items = data.json()
+                # for item in items:
+                #     if item['employer']['name'] in ['Яндекс', 'Camilla Coffee', 'АРТИТЕРА', 'Детективное Агентство Главк', 'Альбатрос', 'КлеверИнвест', 'Sip Direction', 'Барса', 'Фемави', 'Смарт Конекшн']:
+                response.append(items)
             except KeyError:
                 print("Ключ 'items' отсутствует в JSON-ответе")
         return response
@@ -80,5 +80,9 @@ class HH():
         return new_dict
 
 
+a = HH()
+
+
+print(a.get_request())
 
 

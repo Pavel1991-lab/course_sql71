@@ -57,3 +57,5 @@ class DBManager():
         vacancies = cur.fetchall()
         return vacancies
 
+a = DBManager()
+print(a.get_vacancies_with_higher_salary())
