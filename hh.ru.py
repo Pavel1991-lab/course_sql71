@@ -13,25 +13,24 @@ class HH():
         pages = int(self.__count / 100)
         params = {
             "page": 0,
-            "per_page": 100,
+            "per_page": 10,
             "employer_id": self.id
         }
         response = []
-        for page in range(pages):
+
+        for page in range(pages+1):
             params.update({"page": page})
             data = requests.get(f"https://api.hh.ru/vacancies", params=params)
             try:
                 items = data.json()
-                # for item in items:
-                #     if item['employer']['name'] in ['Яндекс', 'Camilla Coffee', 'АРТИТЕРА', 'Детективное Агентство Главк', 'Альбатрос', 'КлеверИнвест', 'Sip Direction', 'Барса', 'Фемави', 'Смарт Конекшн']:
-                response.append(items)
+                response += items['items']
             except KeyError:
                 print("Ключ 'items' отсутствует в JSON-ответе")
         return response
 
-    def items(self):
-        for i in self.get_request():
-            return i['items']
+    # def items(self):
+    #     for i in self.get_request():
+    #         return i['items']
 
 
     def items_1(self):
@@ -42,7 +41,7 @@ class HH():
         new_dict = []
         emp_name = ''
 
-        for i in self.items():
+        for i in self.get_request():
             if self.id == 4519033:
                 emp_name = 'Вэбиум'
             elif self.id == 2014445:
@@ -82,31 +81,39 @@ class HH():
         count = -1
         new_dict = []
         for sal in self.items_1():
-
-            if sal['employer_salary']['currency'] == 'KZT':
-                if sal['employer_salary']['to'] != None:
-                    salary.append(((sal['employer_salary']['from']+ sal['employer_salary']['to'])/2) / 5)
+            if sal['employer_salary'] is None:
+                salary.append(0)
+            elif sal['employer_salary']['currency'] == 'KZT':
+                from_salary = sal['employer_salary']['from'] if isinstance(sal['employer_salary']['from'], int) else 0
+                to_salary = sal['employer_salary']['to'] if isinstance(sal['employer_salary']['to'], int) else 0
+                if to_salary != None:
+                    salary.append(((from_salary + to_salary) / 2) / 5)
                 else:
-                    salary.append(sal['employer_salary']['from'] / 5)
+                    salary.append(from_salary / 5)
             elif sal['employer_salary']['currency'] == 'BYR':
-                if sal['employer_salary']['to'] != None:
-                    salary.append(((sal['employer_salary']['from']+ sal['employer_salary']['to'])/2) * 28)
+                from_salary = sal['employer_salary']['from'] if isinstance(sal['employer_salary']['from'], int) else 0
+                to_salary = sal['employer_salary']['to'] if isinstance(sal['employer_salary']['to'], int) else 0
+                if to_salary != None:
+                    salary.append(((from_salary + to_salary) / 2) * 28)
                 else:
-                    salary.append(sal['employer_salary']['from'] * 28)
+                    salary.append(from_salary * 28)
             else:
-                if sal['employer_salary']['to'] != None:
-                    salary.append((sal['employer_salary']['from']+ sal['employer_salary']['to'])/2)
+                from_salary = sal['employer_salary']['from'] if isinstance(sal['employer_salary']['from'], int) else 0
+                to_salary = sal['employer_salary']['to'] if isinstance(sal['employer_salary']['to'], int) else 0
+                if to_salary != None:
+                    salary.append((from_salary + to_salary) / 2)
                 else:
-                    salary.append(sal['employer_salary']['from'])
+                    salary.append(from_salary)
 
         for i in self.items_1():
             count += 1
-            new_dict.append({'employer_name': i['employer_name'], 'employer_desc': i['employer_descr'], 'employer_salary': salary[count], 'employer_link': i['employer_link']})
+            new_dict.append({'employer_name': i['employer_name'], 'employer_descr': i['employer_descr'],
+                             'employer_salary': salary[count], 'employer_link': i['employer_link']})
 
         return new_dict
 
 
-a = HH(3742187)
+a = HH(4519033)
 print(a.information())
 
 
