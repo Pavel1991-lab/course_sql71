@@ -9,7 +9,7 @@ class DBManager():
                                      host="localhost")
         self.cur = self.conn.cursor()
 
-    def create_table(self):
+    def create_database(self):
 
         # Подключение к базе данных
         conn = psycopg2.connect(database="vacansy",
@@ -64,5 +64,3 @@ class DBManager():
         return vacancies
 
 
-a = DBManager(4519033)
-print(a.get_vacancies_with_keyword('методист'))

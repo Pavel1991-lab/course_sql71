@@ -13,7 +13,7 @@ class HH():
         pages = int(self.__count / 100)
         params = {
             "page": 0,
-            "per_page": 10,
+            "per_page": 100,
             "employer_id": self.id
         }
         response = []
@@ -113,7 +113,7 @@ class HH():
         return new_dict
 
 
-a = HH(4519033)
+
 
 
 
