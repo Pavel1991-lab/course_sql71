@@ -10,13 +10,21 @@ class DBManager():
         self.cur = self.conn.cursor()
 
     def create_database(self):
-
         # Подключение к базе данных
         conn = psycopg2.connect(database="vacansy",
                                 user="pavel",
                                 password="password",
                                 host="localhost")
         cur = conn.cursor()
+
+        # Создание таблицы "job"
+        cur.execute('''CREATE TABLE IF NOT EXISTS job (
+                        id SERIAL PRIMARY KEY ,
+                        employer_name VARCHAR(255) ,
+                        employer_information VARCHAR(255),
+                        employer_salary integer,
+                        employer_link VARCHAR(255)
+                    )''')
 
         employer_addresses = HH(self.id)
 
@@ -26,18 +34,23 @@ class DBManager():
             employer_salary = employer_info['employer_salary']
             employer_link = employer_info['employer_link']
 
-            # Формирование SQL-запроса для вставки данных
-            sql = "INSERT INTO job (id, employer_name, employer_information, employer_salary, employer_link) VALUES (DEFAULT, %s, %s, %s, %s)"
+            # Проверка наличия записи в таблице
+            cur.execute(
+                "SELECT * FROM job WHERE employer_name = %s AND employer_information = %s AND employer_salary = %s AND employer_link = %s",
+                (employer_name, employer_information, employer_salary, employer_link))
+            existing_row = cur.fetchone()
 
-            # Выполнение SQL-запроса с передачей данных
-            cur.execute(sql, (employer_name, employer_information, employer_salary, employer_link))
+            if not existing_row:
+                # Формирование SQL-запроса для вставки данных
+                sql = "INSERT INTO job (id, employer_name, employer_information, employer_salary, employer_link) VALUES (DEFAULT, %s, %s, %s, %s)"
 
-        # Фиксация изменений и закрытие соединения
+                # Выполнение SQL-запроса с передачей данных
+                cur.execute(sql, (employer_name, employer_information, employer_salary, employer_link))
+
+            # Фиксация изменений и закрытие соединения
         conn.commit()
         cur.close()
-        conn.close
-
-
+        conn.close()
     def get_companies_and_vacancies_count(self):
         self.cur.execute("SELECT employer_name, COUNT(*) FROM job GROUP BY employer_name")
         rows = self.cur.fetchall()

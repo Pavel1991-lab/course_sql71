@@ -1,5 +1,6 @@
 from DBManager import DBManager
 
+
 company_and_id = {
         'Вэбиум': 4519033,
         'ИМК': 2014445,
@@ -25,5 +26,14 @@ Chik_Chirik = DBManager(company_and_id['Чик-Чирик'])
 GC_Rest = DBManager(company_and_id['Джи Си Рест'])
 
 
+Vebium.create_database()
+IMK.create_database()
+Smart_Connection.create_database()
+Color_Express.create_database()
+Barsa.create_database()
+ProTex.create_database()
+Seven_Floors.create_database()
+JoyCity.create_database()
+Chik_Chirik.create_database()
+GC_Rest.create_database()
 
-print(Vebium.get_companies_and_vacancies_count())
