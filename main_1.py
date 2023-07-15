@@ -1,3 +1,4 @@
+#  Здесь работаем с методами класса DBManager
 
 from main import Vebium
 
@@ -9,4 +10,4 @@ print(Vebium.get_avg_salary())
 print()
 print(Vebium.get_vacancies_with_higher_salary())
 print()
-print(Vebium.get_vacancies_with_keyword('методист'))
+print(Vebium.get_vacancies_with_keyword('продавец-консультант'))

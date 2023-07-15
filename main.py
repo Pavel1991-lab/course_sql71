@@ -1,5 +1,6 @@
-from DBManager import DBManager
+# В этом модуле мы создаем таблицу и подключаемся к базе данных
 
+from DBManager import DBManager
 
 company_and_id = {
         'Вэбиум': 4519033,
