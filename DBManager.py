@@ -47,7 +47,7 @@ class DBManager():
                 # Выполнение SQL-запроса с передачей данных
                 cur.execute(sql, (employer_name, employer_information, employer_salary, employer_link))
 
-            # Фиксация изменений и закрытие соединения
+        # Фиксация изменений и закрытие соединения
         conn.commit()
         cur.close()
         conn.close()

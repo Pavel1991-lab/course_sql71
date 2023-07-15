@@ -1,13 +1,13 @@
 #  Здесь работаем с методами класса DBManager
 
-from main import Vebium
+from create_database import  db_manager
 
-print(Vebium.get_all_vacancies())
+print(db_manager.get_all_vacancies())
 print()
-print(Vebium.get_companies_and_vacancies_count())
+print(db_manager.get_companies_and_vacancies_count())
 print()
-print(Vebium.get_avg_salary())
+print(db_manager.get_avg_salary())
 print()
-print(Vebium.get_vacancies_with_higher_salary())
+print(db_manager.get_vacancies_with_higher_salary())
 print()
-print(Vebium.get_vacancies_with_keyword('продавец-консультант'))
+print(db_manager.get_vacancies_with_keyword('продавец-консультант'))
