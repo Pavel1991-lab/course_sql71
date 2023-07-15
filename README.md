@@ -4,14 +4,8 @@
 
 1. Установите PostgreSQL на свой компьютер, если он еще не установлен.
 2. Создайте базу данных с именем "vacancy".
-3. Создайте таблицу "job" в базе данных "vacancy" с полями:
-   - id (тип данных: SERIAL, PRIMARY KEY)
-   - employer_name (тип данных: VARCHAR(255))
-   - employer_information (тип данных: TEXT)
-   - employer_address (тип данных: VARCHAR(255))
-   - employer_salary (тип данных: INTEGER)
-   - employer_link (тип данных: VARCHAR(255))
-4. Запустите скрипт "create_table.sql" для создания таблицы "job" в базе данных "vacancy".
+3. Запустите модуль main, чтобы создать таблицу и внести в нее данные
+4. Запустите модуль main_1, в нем отображаются методы класса DBManager
 
 ## Использование
 
