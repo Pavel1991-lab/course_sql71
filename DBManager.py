@@ -62,7 +62,7 @@ class DBManager():
         return rows
 
     def get_avg_salary(self):
-        self.cur.execute("SELECT ROUND(AVG(employer_salary), 2) FROM job")
+        self.cur.execute("SELECT ROUND(AVG(employer_salary), 2) FROM job WHERE employer_salary != 0")
         average_salary = self.cur.fetchone()[0]
         return average_salary
 
